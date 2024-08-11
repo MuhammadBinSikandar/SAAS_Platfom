@@ -42,7 +42,7 @@ ARG DJANGO_SECRET_KEY
 ENV DJANGO_SECRET_KEY = ${DJANGO_SECRET_KEY}
 
 # We also need to add the DEBUG value 
-ARG DJANGO_DEBUG = 0
+ARG DJANGO_DEBUG=0
 ENV DJANGO_DEBUG = ${DJANGO_DEBUG}
 
 #database isn't available during the build of application
