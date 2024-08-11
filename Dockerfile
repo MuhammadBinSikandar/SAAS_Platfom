@@ -41,6 +41,10 @@ RUN pip install -r /tmp/requirements.txt
 ARG DJANGO_SECRET_KEY
 ENV DJANGO_SECRET_KEY = ${DJANGO_SECRET_KEY}
 
+# We also need to add the DEBUG value 
+ARG DJANGO_DEBUG = 0
+ENV DJANGO_DEBUG = ${DJANGO_DEBUG}
+
 #database isn't available during the build of application
 #Runnig those commands that don't require database such as below
 RUN python manage.py vendor_pull
