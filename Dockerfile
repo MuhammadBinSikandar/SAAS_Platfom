@@ -37,6 +37,9 @@ COPY ./src /code
 # Install the Python project requirements
 RUN pip install -r /tmp/requirements.txt
 
+RUN python manage.py vendor_pull
+RUN python manage.py collectstatic --noinput
+
 # set the Django default project name
 ARG PROJ_NAME="App"
 
