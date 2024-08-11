@@ -37,8 +37,17 @@ COPY ./src /code
 # Install the Python project requirements
 RUN pip install -r /tmp/requirements.txt
 
+# DJANGO_SECRET_KEY needs to passed as argument as it is needed at the build time and runtime
+ARG DJANGO_SECRET_KEY
+ENV DJANGO_SECRET_KEY = ${DJANGO_SECRET_KEY}
+
+#database isn't available during the build of application
+#Runnig those commands that don't require database such as below
 RUN python manage.py vendor_pull
 RUN python manage.py collectstatic --noinput
+
+# whitenoise -> s3(this helps better serve the static files)
+
 
 # set the Django default project name
 ARG PROJ_NAME="App"
