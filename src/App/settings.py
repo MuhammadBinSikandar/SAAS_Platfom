@@ -58,7 +58,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware", #used to serve static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -100,7 +101,7 @@ DATABASES = {
 
 #Using Connection String
 CONN_MAX_AGE = config("CONN_MAX_AGE", default=30, cast=int)
-DATABASE_URL = config("DATABASE_URL",cast=str)
+DATABASE_URL = config("DATABASE_URL", default = None)
 
 if DATABASE_URL is not None:
     DATABASES = {
@@ -159,6 +160,14 @@ STATICFILES_DIRS = [
 # output for python manage.py collectstatic
 # local cdn
 STATIC_ROOT = BASE_DIR.parent / "local-cdn"
+#used for django < 4.2
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
